@@ -1,0 +1,60 @@
+<h2>Brand Management</h2>
+
+<form (ngSubmit)="saveBrand()">
+  <input
+    type="text"
+    placeholder="Brand Name"
+    [(ngModel)]="brandForm.name"
+    name="name"
+    required
+  />
+
+  <input
+    type="text"
+    placeholder="Description"
+    [(ngModel)]="brandForm.description"
+    name="description"
+  />
+
+  <input type="file" (change)="onFileChange($event)" />
+
+  <button type="submit">
+    {{ editingId ? 'Update' : 'Create' }} Brand
+  </button>
+
+  <button type="button" (click)="resetForm()">Clear</button>
+</form>
+
+<hr />
+
+<table border="1" width="100%">
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Logo</th>
+    <th>Actions</th>
+  </tr>
+
+  <tr *ngFor="let brand of brands">
+    <td>{{ brand.name }}</td>
+    <td>{{ brand.description }}</td>
+    <td>
+      <img
+        *ngIf="brand.logoUrl"
+        [src]=" 'http://localhost:8080'+brand.logoUrl"
+        width="60"
+      />
+    </td>
+  <td>
+  <button class="btn btn-sm btn-primary me-2"
+          (click)="editBrand(brand)">
+    Edit
+  </button>
+
+  <button class="btn btn-sm btn-danger"
+          (click)="deleteBrand(brand.id)">
+    Delete
+  </button>
+</td>
+  </tr>
+</table>
